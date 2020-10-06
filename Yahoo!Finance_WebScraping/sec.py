@@ -19,6 +19,10 @@ for i in range(len(titles)):
  #print(url[1])
  #print(url[2])
 
+ 
+ # web scraping & HTML parsing
+ data=scraping(url[i])
+
  # web scraping & HTML f.seek(0)
  # convert dates from original codes
  code2Dates(date_1, code_1, data)
