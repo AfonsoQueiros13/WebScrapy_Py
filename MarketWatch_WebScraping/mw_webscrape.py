@@ -20,17 +20,18 @@ soup = BeautifulSoup(response, 'html.parser')
 price = soup.find ('bg-quote',{'class':'value'})
 
 print(price.text)
-summarry = soup.find_all('span',{'class':'primary kv__primary'}) 
-#print (summarry)
+summarry = soup.find_all('span',{'class':'primary'}) 
+print (summarry)
 summarry_atb = []
 summarry_atb.append(price.text)
 
 
-with open(stock+'_marketwatch.csv','w', newline='') as file:
-    writer = csv.writer(file,delimiter="\t")
+with open('scraping/'+ stock +'_marketwatch.csv','w', newline='') as file:
+    writer = csv.writer(file,delimiter="|")
     writer.writerow(attributes)
     #writer.writerow(price)
     for item in summarry:
        summarry_atb.append(item.text)
+    del summarry_atb[1:3]
     writer.writerow(summarry_atb)
 file.close()

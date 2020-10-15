@@ -26,8 +26,8 @@ summarry_atb = []
 summarry_atb.append(price.text)
 
 
-with open(stock+'_walstreetjournal.csv','w', newline='') as file:
-    writer = csv.writer(file,delimiter="\t")
+with open('scraping/'+ stock +'_thewallstreet.csv','w', newline='') as file:
+    writer = csv.writer(file,delimiter="|")
     writer.writerow(attributes)
     #writer.writerow(price)
     for item in summarry:

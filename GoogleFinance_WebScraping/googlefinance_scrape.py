@@ -17,8 +17,8 @@ price = soup.find ('span',{'class':'IsqQVc NprOob XcVN5d'})
 summarry = soup.find_all('td',{'class':'iyjjgb'}) 
 summarry_atb = price
 
-with open(stock+'_googlefinance.csv','w', newline='') as file:
-    writer = csv.writer(file,delimiter="\t")
+with open('scraping/'+ stock +'_googlefinance.csv','w', newline='') as file:
+    writer = csv.writer(file,delimiter="|")
     writer.writerow(attributes)
     #writer.writerow(price)
     for item in summarry:

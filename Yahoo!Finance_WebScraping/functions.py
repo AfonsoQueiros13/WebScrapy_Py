@@ -4,14 +4,14 @@ import datetime
 from datetime import date
 import requests
 import time
+import csv
 
 def scraping(url, file='SecFile.txt'):
- 
+
  # HTML recovery
  #link = "https://finance.yahoo.com/quote/CORN/history?period1=1463436000&period2=1526508000&interval=1d&filter=history&frequency=1d"
  #link = "https://finance.yahoo.com/quote/REY.MI/history?period1=1431986400&period2=1526680800&interval=1d&filter=history&frequency=1d"
  f = requests.get(url)
- print (url)
 
  text_file = open("SecFile.txt", "w")
  text_file.write(f.text)
@@ -115,7 +115,6 @@ def digit_initial_date_for_query(current_date):
     d_init = str(date(2000,12,6).strftime("%Y,%m,%d"))
     d_init=datetime.datetime.strptime(d_init, "%Y,%m,%d")
     delta_days=(current_date-d_init).days
-    #print("AAAAAA:  ",delta_days)
     date_query_today=digit_init+(86400*delta_days)
     #print("quesy code:   ",date_query_today)
     return (date_query_today)
@@ -147,13 +146,12 @@ def addDigit(s):
    
 #---------- URLs generation... ----------#
 
-def urlGenerator(code_1, code_2, titles):
+def urlGenerator(code_1, code_2, stock):
 
- url=[]
- for i in range(len(titles)):
-   url.append("https://finance.yahoo.com/quote/"+titles[i]+"/history?period1="+str(code_2)+"&period2="+str(code_1)+"&interval=1d&filter=history&frequency=1d")
-   #print(url[i])
- return url
+    url=[]
+    url.append("https://finance.yahoo.com/quote/"+stock+"/history?period1="+str(code_2)+"&period2="+str(code_1)+"&interval=1d&filter=history&frequency=1d")
+    #print(url[i])
+    return url
 #----------------------------------------#
 
 
@@ -185,7 +183,7 @@ def code2Dates(date_1,code_1, data):
  tmp=np.core.defchararray.replace(tmp,", "," ")
  tmp=np.core.defchararray.replace(tmp,"   ",",")
  #tmp=np.core.defchararray.replace(tmp,"   ",",")
- np.savetxt("csv.txt", tmp,fmt='%s', delimiter=",")
+ np.savetxt("csv.txt", tmp,fmt='%s', delimiter="|")
  np.savetxt("Stock_parsed.dat", all,fmt='%s', delimiter="   ")
  # remove tmp files...
  os.remove("row1.txt")
@@ -206,11 +204,11 @@ def saveResult(today, date_2, title):
  if not os.path.exists(dir):
     os.makedirs(dir)
 
- init_row="Date           Open    High    Low     Close   AdjCl   Volume\n"  
- tmp_row="Date,Open,High,Low,Close,Adj Close,Volume\n"
-
- with open(dir+title+".dat", "w") as text_file:
-    text_file.write(init_row)
+ init_row="Date|Open|High|Low|Close|AdjCl|Volume\n"  
+ tmp_row="Date|Open|High|Low|Close|Adj Close|Volume\n"
+  
+ with open(dir+title+".dat", "w")  as text_file:
+    text_file.write(tmp_row)
     text_file.write(s)      
 
  os.remove("Stock_parsed.dat")
