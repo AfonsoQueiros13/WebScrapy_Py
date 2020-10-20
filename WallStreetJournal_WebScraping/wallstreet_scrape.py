@@ -6,7 +6,7 @@ import sys
 stock = sys.argv[1]
 
 #atributes of stock
-attributes = ["Price","Volume", "Day Range","52 Week Range","Open",
+attributes = ["Price","Volume", "65 Day Volume Avg","Day Range","52 Week Range","Open",
 "Close","PE Ratio","EPS", "MarketCap", "Shares Outstanding", "Public Float", 
 "Yield","Lastest Dividend", "Ex-Dividend Rate", "Shares Sold Short", "Changes from last", "Percent of float"]
 
@@ -20,6 +20,7 @@ price = soup.find ('span',{'id':'quote_val'})
 
 print(price.text)
 summarry = soup.find_all('span',{'class':'WSJTheme--data_data--2QuzEiZE'}) 
+
 key_data = soup.find_all('span',{'class':'WSJTheme--data_data--3CZkJ3RI'}) 
 #print (summarry)
 summarry_atb = []
@@ -27,7 +28,7 @@ summarry_atb.append(price.text)
 
 
 with open('scraping/'+ stock +'_thewallstreet.csv','w', newline='') as file:
-    writer = csv.writer(file,delimiter="|")
+    writer = csv.writer(file)
     writer.writerow(attributes)
     #writer.writerow(price)
     for item in summarry:
@@ -35,5 +36,6 @@ with open('scraping/'+ stock +'_thewallstreet.csv','w', newline='') as file:
     for item in key_data:
        summarry_atb.append(item.text)
     summarry_atb.pop(1)
+    print(summarry_atb)
     writer.writerow(summarry_atb)
 file.close()

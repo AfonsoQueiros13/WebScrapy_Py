@@ -206,7 +206,7 @@ def saveResult(today, date_2, title):
     os.makedirs(dir)
 
  #init_row="Date|Open|High|Low|Close|AdjCl|Volume\n"  
- tmp_row=["Date","Open","High","LowClose","Adj Close","Volume"]
+ attributes=["Date","Open","High","Low","Close","Adj Close","Volume"]
   
 
  os.remove("Stock_parsed.dat")
@@ -216,13 +216,13 @@ def saveResult(today, date_2, title):
 
     with open(dir+title+".csv", "w") as text_file:
         writer = csv.writer(text_file)
-        writer.writerow(tmp_row)
+        writer.writerow(attributes)
         for row in csv_reader:
             row_splited = row[0].split('|')
-            print(row_splited)
             writer.writerow(row_splited)
-        
+    text_file.close()
     
+ myfile.close()  
     #text_file.writerow(s)      
   
  #os.remove("csv.txt")

@@ -15,13 +15,16 @@ response = opener.open('https://www.google.com/search?q='+stock)
 soup = BeautifulSoup(response, 'html.parser')
 price = soup.find ('span',{'class':'IsqQVc NprOob XcVN5d'})
 summarry = soup.find_all('td',{'class':'iyjjgb'}) 
+
 summarry_atb = price
 
 with open('scraping/'+ stock +'_googlefinance.csv','w', newline='') as file:
-    writer = csv.writer(file,delimiter="|")
+    writer = csv.writer(file)
     writer.writerow(attributes)
-    #writer.writerow(price)
     for item in summarry:
-       summarry_atb.append(item.text)
+        summarry_atb.append(item.text)
+        print(summarry_atb)
     writer.writerow(summarry_atb)
 file.close()
+
+
