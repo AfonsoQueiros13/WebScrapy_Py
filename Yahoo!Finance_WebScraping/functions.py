@@ -5,6 +5,7 @@ from datetime import date
 import requests
 import time
 import csv
+from csv import reader
 
 def scraping(url, file='SecFile.txt'):
 
@@ -204,20 +205,24 @@ def saveResult(today, date_2, title):
  if not os.path.exists(dir):
     os.makedirs(dir)
 
- init_row="Date|Open|High|Low|Close|AdjCl|Volume\n"  
- tmp_row="Date|Open|High|Low|Close|Adj Close|Volume\n"
+ #init_row="Date|Open|High|Low|Close|AdjCl|Volume\n"  
+ tmp_row=["Date","Open","High","LowClose","Adj Close","Volume"]
   
- with open(dir+title+".dat", "w")  as text_file:
-    text_file.write(tmp_row)
-    text_file.write(s)      
 
  os.remove("Stock_parsed.dat")
  
- with open('csv.txt', 'r+') as myfile:  
-  s = myfile.read()  
- 
- with open(dir+title+".csv", "w") as text_file:
-    text_file.write(tmp_row)
-    text_file.write(s)      
+ with open('csv.txt', 'r') as myfile:  
+    csv_reader = reader(myfile)  
+
+    with open(dir+title+".csv", "w") as text_file:
+        writer = csv.writer(text_file)
+        writer.writerow(tmp_row)
+        for row in csv_reader:
+            row_splited = row[0].split('|')
+            print(row_splited)
+            writer.writerow(row_splited)
+        
+    
+    #text_file.writerow(s)      
   
  #os.remove("csv.txt")
