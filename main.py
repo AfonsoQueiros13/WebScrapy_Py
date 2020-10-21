@@ -3,13 +3,11 @@
 #WSJ ->  The Wall Street Journal
 
 import sys
-from lib import googlefinance_scrape
-from lib import wallstreet_scrape
-from lib import invest_scraper
-from lib import yahoo_finance_scraper
-from lib import mw_webscrape
-
-
+from lib.googlefinance_scrape import gf_scrape
+from lib.yahoo_finance_scraper import yf_scrape
+from lib.mw_webscrape import mktw_scrape
+from lib.invest_scraper import inv_scrape
+from lib.wallstreet_scrape import wsj_scrape
 
 def main():
     
@@ -22,15 +20,20 @@ def main():
             gf_scrape(stock)
         
         if(market == "YF"):
-            print("teste")
+            yf_scrape(stock)
+        
         if(market == "MKTW"):
-            print("teste")
+            mktw_scrape(stock)
+        
         if(market == "INV"): 
-            print("teste")
+            inv_scrape(stock)
+
         if(market == "WSJ"): 
-            print("teste")
+            wsj_scrape(stock)
+    
     else:
         raise ValueError("USAGE: python3 main.py GF MCD")
 
 #INVOKE MAIN
-main()
+if __name__ == "__main__":
+    main()
