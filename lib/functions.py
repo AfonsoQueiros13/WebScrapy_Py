@@ -225,4 +225,5 @@ def saveResult(today, date_2, title):
  myfile.close()  
     #text_file.writerow(s)      
   
- #os.remove("csv.txt")
+ os.remove("csv.txt")
+ os.remove("SecFile.txt")
