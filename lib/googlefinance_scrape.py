@@ -17,7 +17,7 @@ def gf_scrape(stock):
 
     summarry_atb = price
 
-    with open('scraping/'+ stock +'_googlefinance.csv','w', newline='') as file:
+    with open('scraping_gf/'+ stock +'_googlefinance.csv','w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(attributes)
         for item in summarry:

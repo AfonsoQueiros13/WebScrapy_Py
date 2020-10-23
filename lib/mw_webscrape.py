@@ -34,7 +34,7 @@ def mktw_scrape(stock):
     #summarry_atb.append(stock_open.text)
 
 
-    with open('scraping/'+ stock +'_marketwatch.csv','w', newline='') as file:
+    with open('scraping_mktw/'+ stock +'_marketwatch.csv','w', newline='') as file:
         writer = csv.writer(file)
         print(attributes_txt)
         writer.writerow(attributes_txt)

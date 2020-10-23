@@ -8,7 +8,7 @@ def inv_scrape(stk):
                                         from_date='30/09/2020',
                                         to_date='01/10/2020')
     print(df.head().to_string()) 
-    output_file = "scraping/" + stk + "_invest.csv"
+    output_file = "scraping_inv/" + stk + "_invest.csv"
     print(df.head().to_csv(output_file))
 
 

@@ -27,7 +27,7 @@ def wsj_scrape(stock):
    summarry_atb.append(price.text)
 
 
-   with open('scraping/'+ stock +'_thewallstreet.csv','w', newline='') as file:
+   with open('scraping_wsj/'+ stock +'_thewallstreet.csv','w', newline='') as file:
       writer = csv.writer(file)
       writer.writerow(attributes)
       #writer.writerow(price)
