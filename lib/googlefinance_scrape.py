@@ -22,7 +22,6 @@ def gf_scrape(stock):
         writer.writerow(attributes)
         for item in summarry:
             summarry_atb.append(item.text)
-            print(summarry_atb)
         writer.writerow(summarry_atb)
     file.close()
 
