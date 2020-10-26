@@ -12,11 +12,15 @@ df.printSchema()
 
 dataCollect = df.collect()
 
+df = df.withColumnRenamed('_c0','Date')
+df = df.withColumnRenamed('_c1','Open')
 
-date = df.select("Date").collect()
+df.show(5)
+
+date = df.select('Date').collect()
 print(date)
 
 
-op = df.select("Open").collect()
+op = df.select('Open').collect()
 print(op)
 
