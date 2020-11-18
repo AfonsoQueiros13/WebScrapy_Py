@@ -17,23 +17,26 @@ from lib.wallstreet_scrape import wsj_scrape
 def main():
     if len(sys.argv) > 2:
         
-        stock = sys.argv[1]
-        market = sys.argv[2]
+        market = sys.argv[1]
+        stock = sys.argv[2]
         
         if(market == "GF"):
             gf_scrape(stock)
         
-        if(market == "YF"):
+        elif(market == "YF"):
             yf_scrape(stock)
         
-        if(market == "MKTW"):
+        elif(market == "MKTW"):
             mktw_scrape(stock)
         
-        if(market == "INV"): 
+        elif(market == "INV"): 
             inv_scrape(stock)
 
-        if(market == "WSJ"): 
+        elif(market == "WSJ"): 
             wsj_scrape(stock)
+        
+        else:
+            print("Stock Market not recognized")
     
     else:
         raise ValueError("USAGE: python3 main.py ""INITIALS FOR STOCK"" ""INITIALS FOR MARKET"", for example : python3 AAPL WSJ")

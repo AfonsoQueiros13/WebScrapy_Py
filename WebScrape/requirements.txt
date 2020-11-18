@@ -48,6 +48,7 @@ docutils==0.16
 entrypoints==0.3
 et-xmlfile==1.0.1
 fastcache==1.1.0
+fastparquet==0.4.1
 filelock==3.0.12
 flake8==3.8.3
 Flask==1.1.2
@@ -65,6 +66,7 @@ imageio @ file:///tmp/build/80754af9/imageio_1594161405741/work
 imagesize==1.2.0
 importlib-metadata @ file:///tmp/build/80754af9/importlib-metadata_1593446408836/work
 intervaltree @ file:///tmp/build/80754af9/intervaltree_1594361675072/work
+investpy==1.0
 ipykernel @ file:///tmp/build/80754af9/ipykernel_1594753368403/work/dist/ipykernel-5.3.2-py3-none-any.whl
 ipython @ file:///tmp/build/80754af9/ipython_1593447368578/work
 ipython-genutils==0.2.0
@@ -118,6 +120,7 @@ olefile==0.46
 openpyxl @ file:///tmp/build/80754af9/openpyxl_1594167385094/work
 packaging==20.4
 pandas @ file:///tmp/build/80754af9/pandas_1592841632039/work
+pandas-datareader==0.9.0
 pandocfilters==1.4.2
 parso==0.7.0
 partd==1.1.0
@@ -137,6 +140,7 @@ prompt-toolkit==3.0.5
 psutil==5.7.0
 ptyprocess==0.6.0
 py @ file:///tmp/build/80754af9/py_1593446248552/work
+pyarrow==2.0.0
 pycodestyle==2.6.0
 pycosat==0.6.3
 pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
@@ -201,6 +205,7 @@ tblib==1.6.0
 terminado==0.8.3
 testpath==0.4.4
 threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+thrift==0.13.0
 toml @ file:///tmp/build/80754af9/toml_1592853716807/work
 toolz==0.10.0
 tornado==6.0.4
@@ -210,6 +215,7 @@ typed-ast==1.4.1
 typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1592847887441/work
 ujson==1.35
 unicodecsv==0.14.1
+Unidecode==1.1.1
 urllib3==1.25.9
 watchdog @ file:///tmp/build/80754af9/watchdog_1593447306189/work
 wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
