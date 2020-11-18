@@ -9,7 +9,7 @@ def create_common_attributes(summarry, attr):   #Moving elements craped to  comm
     for item in summarry:
         attr.append(item.text)
     del attr[2:7]
-    attr[2], attr[3] = attr[3], attr[2]
+    attr[1], attr[3] = attr[3], attr[2]
     attr[2], attr[5] = attr[5], attr[2]
     attr[2], attr[3] = attr[2].split("-")
     attr[2], attr[3] = attr[3], attr[2]
@@ -33,7 +33,7 @@ def mktw_scrape(stock):
 
 
      #atributes of stock
-    attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Close52"]
+    attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
 
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.90 Safari/537.36')]
@@ -49,14 +49,10 @@ def mktw_scrape(stock):
     summarry_atb.append(price.text) 
     summarry_atb.append(close.text)
 
-    #summarry_atb.append(stock_open.text)
-
-
     with open('scraping_mktw/'+ data + '_'+ stock +'_marketwatch.csv','w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(attributes)
         summarry_atb = create_common_attributes(summarry, summarry_atb)
         writer.writerow(summarry_atb)
-        print(summarry_atb)
     file.close()
     

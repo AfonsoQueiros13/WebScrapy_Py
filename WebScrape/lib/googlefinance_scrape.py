@@ -12,7 +12,7 @@ def gf_scrape(stock):
     data = now.strftime("%Y-%m-%d")
 
     #atributes of stock
-    attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Close52"]
+    attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
 
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.90 Safari/537.36')]
