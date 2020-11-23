@@ -59,6 +59,7 @@ glob2==0.7
 gmpy2==2.0.8
 greenlet==0.4.16
 h5py==2.10.0
+hdfs3==0.3.1
 HeapDict==1.0.1
 html5lib @ file:///tmp/build/80754af9/html5lib_1593446221756/work
 idna @ file:///tmp/build/80754af9/idna_1593446292537/work
@@ -121,6 +122,7 @@ openpyxl @ file:///tmp/build/80754af9/openpyxl_1594167385094/work
 packaging==20.4
 pandas @ file:///tmp/build/80754af9/pandas_1592841632039/work
 pandas-datareader==0.9.0
+pandasql==0.7.3
 pandocfilters==1.4.2
 parso==0.7.0
 partd==1.1.0

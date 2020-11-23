@@ -11,14 +11,15 @@ def create_common_attributes(summarry,data_intervals,attr):   #Moving elements c
     for item in data_intervals:
         attr.append(item.text)
     del attr[2:13]
-    attr[1], attr[3] = attr[3], attr[1]
-    attr[3], attr[2] = attr[17].split("-")    
+    attr[1], attr[2] = attr[2], attr[1]
+    attr[3], attr[2] = attr[16].split("-")    
     
-    attr[4], attr[8] = attr[8], attr[4]
-    attr[10], attr[5] = attr[5], attr[10]
-    attr[6]= attr[26].split('(')[0]
-    attr[13], attr[7] = attr[7], attr[13]
-    attr[9], attr[8] = attr[18].split("-")
+    attr[4], attr[7] = attr[7], attr[4]
+    attr[9], attr[5] = attr[5], attr[9]
+    attr[6]= attr[25].split('(')[0]
+    attr[12], attr[7] = attr[7], attr[12]
+    print(attr)
+    attr[9], attr[8] = attr[17].split("-")
     del attr[10:32]
     return attr
 

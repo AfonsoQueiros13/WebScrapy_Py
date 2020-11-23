@@ -34,4 +34,5 @@ def gf_scrape(stock):
         writer.writerow(summarry_atb)
     file.close()
 
+    return summarry_atb
 

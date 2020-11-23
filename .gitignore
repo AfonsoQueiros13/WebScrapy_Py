@@ -5,3 +5,8 @@ WebScrape/scraping_mktw/2020-11-18_AAPL_marketwatch.csv
 WebScrape/scraping_wsj/2020-11-18_AAPL_thewallstreet.csv
 WebScrape/scraping_wsj/2020-11-19_AAPL_thewallstreet.csv
 WebScrape/scraping_yf/2020-11-19_AAPL_yahoo_finance.csv
+WebScrape/scraping_gf/2020-11-20_AAPL_googlefinance.csv
+WebScrape/scraping_gf/2020-11-23_AAPL_googlefinance.csv
+WebScrape/scraping_yf/2020-11-20_AAPL_yahoo_finance.csv
+WebScrape/scraping_yf/2020-11-20_MCD_yahoo_finance.csv
+WebScrape/scraping_mktw/2020-11-20_AAPL_marketwatch.csv
