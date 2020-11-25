@@ -26,13 +26,8 @@ def gf_scrape(stock):
     summarry_atb = []
     summarry_atb.append(price.text)
 
-    with open('scraping_gf/'+ data + '_'+ stock +'_googlefinance.csv','w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(attributes)
-        for item in summarry:
-            summarry_atb.append(item.text)
-        writer.writerow(summarry_atb)
-    file.close()
 
+    for item in summarry:
+        summarry_atb.append(item.text)
     return summarry_atb
 

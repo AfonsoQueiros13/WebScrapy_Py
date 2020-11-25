@@ -7,7 +7,7 @@ import datetime
 
 def create_common_attributes(summarry, attr):   #Moving elements craped to  common output format
     for item in summarry:
-        attr.append(item.text)
+        attr.append(item)
     del attr[2:7]
     attr[1], attr[3] = attr[3], attr[2]
     attr[2], attr[5] = attr[5], attr[2]
@@ -23,8 +23,11 @@ def create_common_attributes(summarry, attr):   #Moving elements craped to  comm
     attr[15], attr[3] = attr[3], attr[15]
     attr[14], attr[8] = attr[8], attr[14]
     attr[15], attr[9] = attr[9], attr[15]
-    del attr[9:19]
-    return attr
+    del attr[9:19] 
+    res = []
+    for x in attr:
+        res.append(x)
+    return res
 
 def mktw_scrape(stock):
 
@@ -43,7 +46,9 @@ def mktw_scrape(stock):
     price = soup.find ('bg-quote',{'class':'value'})
     close = soup.find ('td',{'class':'table__cell u-semi'})
     summarry = soup.find_all('span',{'class':'primary'}) 
-
+    sumarry_list = []
+    for i in summarry:
+        sumarry_list.append(i.text)
     #Scraping of values that dont appear with the same class as the other indicators
     summarry_atb = []
     summarry_atb.append(price.text) 
@@ -52,7 +57,7 @@ def mktw_scrape(stock):
     with open('scraping_mktw/'+ data + '_'+ stock +'_marketwatch.csv','w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(attributes)
-        summarry_atb = create_common_attributes(summarry, summarry_atb)
+        summarry_atb = create_common_attributes(sumarry_list, summarry_atb)
         writer.writerow(summarry_atb)
     file.close()
-    
+    return summarry_atb

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.7
+
 from pyspark.sql import SparkSession
 import pandas
 import datetime
@@ -10,9 +10,20 @@ from pyspark.sql.functions import col, countDistinct
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import style
-
+from pyspark.sql import SQLContext
+from pyspark.sql import SparkSession
+from pyspark.sql.types import *
+attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
 
 spark = SparkSession.builder.appName("Teste100mLinhasWithPandas").getOrCreate()
+#sc = spark.sparkContext
+#sqlContext = SQLContext(sc)
+
+values = ['114,22', '117,18', '117,62', '113,80', '1,94Bi', '34,87', '0,72%', '117,34', '137,98', '53,15']
+#df_data = spark.createDataFrame([attributes])
+#df_data.show()
+
+
 
 df = spark.read.csv(path="csvtest/MCD_yahoo100m.csv")
 

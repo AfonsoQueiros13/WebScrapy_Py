@@ -17,6 +17,7 @@ from pyspark.sql.types import *
 import subprocess
 from subprocess import Popen, PIPE
 import datetime
+import csv
 from pyspark.sql import SQLContext
 
 
@@ -25,19 +26,6 @@ spark = SparkSession.builder.appName("Scraping_5min4sites").getOrCreate()
 sc = spark.sparkContext
 sqlContext = SQLContext(sc)
 
-#atributes of stock (String to dataframe schema)
-attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
-
-field = [StructField("Price",StringType(), True),StructField("Open", StringType(), True),\
-StructField("High", StringType(), True),StructField("Low", StringType(), True),\
-StructField("MarketCap", StringType(), True),\
-StructField("PERatio", StringType(), True),StructField("Dividend", StringType(), True),\
-StructField("Close", StringType(), True), StructField("High52", StringType(), True),\
-StructField("Low52", StringType(), True)]
-schema = StructType(field)
-
-
-
 #MAIN FUNCTION
 def main():
 
@@ -45,20 +33,18 @@ def main():
         market = sys.argv[1]
         stock = sys.argv[2]
 
-        
-
         if(market == "GF"):
             values = gf_scrape(stock)
 
         
         elif(market == "YF"):
-            yf_scrape(stock)
+            values = yf_scrape(stock)
         
         elif(market == "MKTW"):
-            mktw_scrape(stock)
+            values = mktw_scrape(stock)
 
         elif(market == "WSJ"): 
-            wsj_scrape(stock)
+            values = wsj_scrape(stock)
         
         else:
             print("Stock Market not recognized")
@@ -78,40 +64,86 @@ def main():
     data = datetime.datetime.today()
 
     path = 'scraping/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'.csv'
+    path_new = 'scraping/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'new.csv'    
+    path_old = 'scraping/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'old.csv'
+    
+    process1 = subprocess.Popen(['hdfs', 'dfs', '-test', '-e', path_old])
+    process1.communicate()
+
+    if process1.returncode == 0:
+        print("HEREEEEEEEEEE")
+        proc4 = subprocess.Popen(['hdfs', 'dfs', '-rm', '-R', path_old])   
+        proc4.communicate()
+
+    process2 = subprocess.Popen(['hdfs', 'dfs', '-test', '-e', path_new])
+    process2.communicate()
+
+    if process2.returncode == 0:
+        proc5 = subprocess.Popen(['hdfs', 'dfs', '-rm', '-R', path_new])   
+        proc5.communicate()
+
+
     proc = subprocess.Popen(['hdfs', 'dfs', '-test', '-e', path])
     proc.communicate()
+
+
+
+
     if proc.returncode != 0: #file not exist > new month incoming or first record, create new csv
         print ('%s does not exist' % path)
+        with open('/home/hadoop/csv/template.csv','w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(values)
+        file.close()
         path = 'scraping/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'.csv'
+        proc2 = subprocess.Popen(['hdfs', 'dfs', '-put', '/home/hadoop/csv/template.csv', path])   
+        proc2.communicate()
         
 
-        #proc = subprocess.Popen(['hdfs', 'dfs', '-touchz', path])
-
-        df = sqlContext.createDataFrame(sc.emptyRDD(), schema)
-        df.show()
-        df.write.csv(path)
     else :  #file  exist > READ csv and write new record
         print ('%s exists' % path)
-        df = spark.read.csv(path = 'scraping/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'.csv')
-            
-    print("estou aqui1")
-    print(values)
-    df_data = spark.createDataFrame([values])
-    df_data.show()
-    print("estou aqui2")
-    df_new = df.union(df_data)
-    print("estou aqui3")
-    df_new.show()
-    print("estou aqui4")
-    proc = subprocess.Popen(['hdfs', 'dfs', '-rm', '-R', path])
-    print("estou aqui5")
-    proc.communicate()
+        with open('/home/hadoop/csv/template.csv','w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(values)
+        file.close()
 
-    df_new.write.csv(path)
-    print("estou aqui6")
-    #put = subprocess.Popen(['hdfs', 'dfs', '-put', '-',path], stdin=cat.stdout)
-    #print("tou aqui5")
-    #put.communicate()   
+        
+        proc3= subprocess.Popen(['hdfs', 'dfs', '-mv', path,path_old])   
+        proc3.communicate()
+        df_old = spark.read.csv(path_old)
+        df_old = df_old.withColumnRenamed('_c0','Price')
+        df_old = df_old.withColumnRenamed('_c1','Open')
+        df_old = df_old.withColumnRenamed('_c2','High')
+        df_old = df_old.withColumnRenamed('_c3','Low')
+        df_old = df_old.withColumnRenamed('_c4','MarketCap')
+        df_old= df_old.withColumnRenamed('_c5','PERatio')
+        df_old = df_old.withColumnRenamed('_c6','Dividend')
+        df_old = df_old.withColumnRenamed('_c7','Close')
+        df_old = df_old.withColumnRenamed('_c8','High52')
+        df_old = df_old.withColumnRenamed('_c9','Low52')
+        df_old.show()
+       
+    
+        proc4 = subprocess.Popen(['hdfs', 'dfs', '-put', '/home/hadoop/csv/template.csv', path_new])
+        proc4.communicate()
+        df_new = spark.read.csv(path_new)
+        df_new = df_new.withColumnRenamed('_c0','Price')
+        df_new = df_new.withColumnRenamed('_c1','Open')
+        df_new = df_new.withColumnRenamed('_c2','High')
+        df_new = df_new.withColumnRenamed('_c3','Low')
+        df_new = df_new.withColumnRenamed('_c4','MarketCap')
+        df_new = df_new.withColumnRenamed('_c5','PERatio')
+        df_new = df_new.withColumnRenamed('_c6','Dividend')
+        df_new = df_new.withColumnRenamed('_c7','Close')
+        df_new = df_new.withColumnRenamed('_c8','High52')
+        df_new = df_new.withColumnRenamed('_c9','Low52')
+        df_new.show()
+        df1 = df_old.unionByName(df_new)
+        df1.show()
+       
+        # Save file to HDFS
+        df1.write.csv(path)
+        #df2.show(10)
     
 
 #INVOKE MAIN
