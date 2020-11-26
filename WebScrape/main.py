@@ -82,7 +82,7 @@ def main():
 
             
             proc3= subprocess.Popen(['/home/hadoop/hadoop/bin/hdfs', 'dfs', '-mv', path,path_old])   
-            print(proc3.communicate())
+            proc3.communicate()
             df_old = spark.read.csv(path= "hdfs://node-master:9000/user/hadoop/"+path_old)
             df_old = df_old.withColumnRenamed('_c0','Price')
             df_old = df_old.withColumnRenamed('_c1','Open')
@@ -94,6 +94,7 @@ def main():
             df_old = df_old.withColumnRenamed('_c7','Close')
             df_old = df_old.withColumnRenamed('_c8','High52')
             df_old = df_old.withColumnRenamed('_c9','Low52')
+            df_old = df_old.withColumnRenamed('_c10','TimeStamp')
             df_old.show()
         
         
@@ -110,6 +111,7 @@ def main():
             df_new = df_new.withColumnRenamed('_c7','Close')
             df_new = df_new.withColumnRenamed('_c8','High52')
             df_new = df_new.withColumnRenamed('_c9','Low52')
+            df_new = df_new.withColumnRenamed('_c10','TimeStamp')
             df_new.show()
             df1 = df_old.unionByName(df_new)
             df1.show()

@@ -5,6 +5,9 @@ import csv
 import sys
 import datetime
 
+date = datetime.datetime.today()
+data= str(date.hour)+":"+str(date.minute)
+
 def create_common_attributes(summarry,data_intervals,attr):   #Moving elements craped to  common output format
 
 
@@ -23,7 +26,8 @@ def create_common_attributes(summarry,data_intervals,attr):   #Moving elements c
     print(attr)
 
     attr[9], attr[8] = attr[17].split("-")
-    del attr[10:32]
+    attr[10] = data
+    del attr[11:32]
     res = []
     for x in attr:
         res.append(x)
@@ -31,12 +35,6 @@ def create_common_attributes(summarry,data_intervals,attr):   #Moving elements c
 
 def yf_scrape(stock):
 
-    now = datetime.datetime.now()
-    data = now.strftime("%Y-%m-%d")
-
-
-    #atributes of stock
-    attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
 
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.90 Safari/537.36')]

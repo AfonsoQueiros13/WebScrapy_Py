@@ -5,7 +5,8 @@ import csv
 import sys
 import datetime
 
-
+date = datetime.datetime.today()
+data= str(date.hour)+":"+str(date.minute)
 def create_common_attributes(summarry,key_data,attr):   #Moving elements craped to  common output format
    for item in summarry:
       attr.append(item)
@@ -26,7 +27,8 @@ def create_common_attributes(summarry,key_data,attr):   #Moving elements craped 
    print(attr)
    attr[7]= attr[13].split('(')[0]
    attr[9], attr[8] = attr[9].split("-")
-   del attr[10:25]
+   attr[10] = data
+   del attr[11:25]
    res = []
    for x in attr:
         res.append(x)
@@ -40,8 +42,6 @@ def wsj_scrape(stock):
    data = now.strftime("%Y-%m-%d")
 
 
-   #atributes of stock
-   attributes = ["Price","Open", "High","Low","MarketCap","PERatio","Dividend","Close","High52","Low52"]
 
    opener = urllib.request.build_opener()
    opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.90 Safari/537.36')]
