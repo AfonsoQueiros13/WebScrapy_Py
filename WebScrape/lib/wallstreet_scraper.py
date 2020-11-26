@@ -1,3 +1,4 @@
+#!/home/hadoop/anaconda3/bin/python3.7
 from bs4 import BeautifulSoup
 import urllib.request
 import csv
@@ -70,10 +71,6 @@ def wsj_scrape(stock):
    summarry_atb.append(price.text)
 
 
-   with open('scraping_wsj/'+ data + '_'+ stock +'_thewallstreet.csv','w', newline='') as file:
-      writer = csv.writer(file)
-      writer.writerow(attributes)
-      summarry_atb = create_common_attributes(summarry_list,key_data_list,summarry_atb)
-      writer.writerow(summarry_atb)
-   file.close()
+   
+   summarry_atb = create_common_attributes(summarry_list,key_data_list,summarry_atb)
    return summarry_atb

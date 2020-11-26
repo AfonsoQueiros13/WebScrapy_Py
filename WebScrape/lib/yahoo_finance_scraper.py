@@ -1,4 +1,4 @@
-
+#!/home/hadoop/anaconda3/bin/python3.7
 from bs4 import BeautifulSoup
 import urllib.request
 import csv
@@ -13,17 +13,16 @@ def create_common_attributes(summarry,data_intervals,attr):   #Moving elements c
     for item in data_intervals:
         attr.append(item)
     del attr[2:13]
-
     attr[1], attr[2] = attr[2], attr[1]
     attr[3], attr[2] = attr[17].split("-")    
     
     attr[4], attr[7] = attr[7], attr[4]
     attr[9], attr[5] = attr[5], attr[9]
-    attr[6]= attr[26].split('(')[0]
+    attr[6]= attr[25].split('(')[0]
     attr[12], attr[7] = attr[7], attr[12]
     print(attr)
 
-    attr[9], attr[8] = attr[18].split("-")
+    attr[9], attr[8] = attr[17].split("-")
     del attr[10:32]
     res = []
     for x in attr:
@@ -62,12 +61,8 @@ def yf_scrape(stock):
     summarry_atb.append(price.text)
     #summarry_atb.append(highlow.text)
 
-    with open('scraping_yf/'+ data + '_'+ stock +'_yahoo_finance.csv','w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(attributes)
-        summarry_atb = create_common_attributes(sumarry_list,data_intervals_list,summarry_atb)
-        writer.writerow(summarry_atb)
-    file.close()
+    
+    summarry_atb = create_common_attributes(sumarry_list,data_intervals_list,summarry_atb)
     return summarry_atb
 
 
