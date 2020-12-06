@@ -6,7 +6,7 @@ import sys
 import datetime
 
 date = datetime.datetime.today()
-data= str(date.hour)+":"+str(date.minute)
+data = str(date.day) + "-"+ str(date.hour)+":"+str(date.minute)
 
 def create_common_attributes(summarry,data_intervals,attr):   #Moving elements craped to  common output format
 
