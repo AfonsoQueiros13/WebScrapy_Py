@@ -5,8 +5,8 @@ import csv
 import sys
 import datetime
 date = datetime.datetime.today()
-data = str(date.day) + "-"+ str(date.hour)+":"+str(date.minute)
-
+data = str(date.month) + "/"+ str(date.day) +  "/" + str(date.year) + " "+ (str('{:02d}'.format(date.hour)))+":" + (str('{:02d}'.format(date.minute)))
+print(data)
 def gf_scrape(stock):
     
   
