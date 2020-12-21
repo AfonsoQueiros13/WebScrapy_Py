@@ -3,11 +3,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import csv
 import sys
-import datetime
-date = datetime.datetime.today()
-data = str(date.month) + "/"+ str(date.day) +  "/" + str(date.year) + " "+ (str('{:02d}'.format(date.hour)))+":" + (str('{:02d}'.format(date.minute)))
-print(data)
-def create_common_attributes(summarry,data_intervals,attr):   #Moving elements craped to  common output format
+def create_common_attributes(summarry,data_intervals,attr,data):   #Moving elements craped to  common output format
 
 
     for item in summarry:
@@ -25,14 +21,15 @@ def create_common_attributes(summarry,data_intervals,attr):   #Moving elements c
     print(attr)
 
     attr[9], attr[8] = attr[17].split("-")
-    attr[10] = data
-    del attr[11:32]
+    attr[10] = "yf"
+    attr[11] = data
+    del attr[12:32]
     res = []
     for x in attr:
         res.append(x)
     return res
 
-def yf_scrape(stock):
+def yf_scrape(stock,data):
 
 
     opener = urllib.request.build_opener()
@@ -59,7 +56,7 @@ def yf_scrape(stock):
     #summarry_atb.append(highlow.text)
 
     
-    summarry_atb = create_common_attributes(sumarry_list,data_intervals_list,summarry_atb)
+    summarry_atb = create_common_attributes(sumarry_list,data_intervals_list,summarry_atb,data)
     return summarry_atb
 
 

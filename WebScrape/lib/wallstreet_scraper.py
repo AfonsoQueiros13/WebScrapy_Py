@@ -3,12 +3,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import csv
 import sys
-import datetime
-
-date = datetime.datetime.today()
-data = str(date.month) + "/"+ str(date.day) +  "/" + str(date.year) + " "+ (str('{:02d}'.format(date.hour)))+":" + (str('{:02d}'.format(date.minute)))
-print(data)
-def create_common_attributes(summarry,key_data,attr):   #Moving elements craped to  common output format
+def create_common_attributes(summarry,key_data,attr,data):   #Moving elements craped to  common output format
    for item in summarry:
       attr.append(item)
    for item in key_data:
@@ -28,8 +23,10 @@ def create_common_attributes(summarry,key_data,attr):   #Moving elements craped 
    print(attr)
    attr[7]= attr[13].split('(')[0]
    attr[9], attr[8] = attr[9].split("-")
-   attr[10] = data
-   del attr[11:25]
+   attr[10] = "wsj"
+   attr[11] = data
+
+   del attr[12:25]
    res = []
    for x in attr:
         res.append(x)
@@ -38,9 +35,8 @@ def create_common_attributes(summarry,key_data,attr):   #Moving elements craped 
 
 
 
-def wsj_scrape(stock):
-   now = datetime.datetime.now()
-   data = now.strftime("%Y-%m-%d")
+def wsj_scrape(stock,data):
+
 
 
 
@@ -73,5 +69,5 @@ def wsj_scrape(stock):
 
 
    
-   summarry_atb = create_common_attributes(summarry_list,key_data_list,summarry_atb)
+   summarry_atb = create_common_attributes(summarry_list,key_data_list,summarry_atb,data)
    return summarry_atb

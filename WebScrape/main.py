@@ -27,37 +27,34 @@ sqlContext = SQLContext(sc)
 
 #MAIN FUNCTION
 def main():
+    #GET DATE MONTH AND YEAR        
+   
     stock = sys.argv[1]
+    print(stock)
     count = 1
     while (count <=4):
+        date = datetime.datetime.today()
+        data = str(date.month) + "/"+ str(date.day) +  "/" + str(date.year) + " "+ (str('{:02d}'.format(date.hour)))+":" + (str('{:02d}'.format(date.minute)))
 
         if  (len(sys.argv) > 1):
             if  (count == 1):  
-                market = "GF"       
-                values = gf_scrape(stock)
-                folder = 'gf'
+                values = gf_scrape(stock,data)
 
             if  (count == 2):
-                market = "YF"  
-                values = yf_scrape(stock)
-                folder = 'yf'
+                values = yf_scrape(stock,data)
             
             if  (count == 3):
-                market = "MKTW"  
-                values = mktw_scrape(stock)
-                folder = 'mktw'
+                values = mktw_scrape(stock,data)
 
             if  (count == 4):
-                market = "WSJ"  
-                values = wsj_scrape(stock)
-                folder = 'wsj'
-        #GET DATE MONTH AND YEAR        
-        data = datetime.datetime.today()
+                values = wsj_scrape(stock,data)
+       
         #PATHS FOR SCRAPED FILES AND AUX
 
-        path = 'scraping/'+folder +'/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'.csv'
-        path_new = 'scraping/'+folder + '/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'new.csv'    
-        path_old = 'scraping/'+folder +'/'+stock+'_'+ market+'_'+str(data.month)+'_'+str(data.year)+'old.csv'
+        path = 'scraping/'+stock+'_'+str(date.month)+'_'+str(date.year)+'.csv'
+        print(path)
+        path_new = 'scraping/'+stock+'_'+str(date.month)+'_'+str(date.year)+'new.csv'    
+        path_old = 'scraping/'+stock+'_'+str(date.month)+'_'+str(date.year)+'old.csv'
         
         proc = subprocess.Popen(['/home/hadoop/hadoop/bin/hdfs', 'dfs', '-test', '-e', path] ,stdout=subprocess.PIPE)
         proc.communicate()
@@ -94,7 +91,8 @@ def main():
             df_old = df_old.withColumnRenamed('_c7','Close')
             df_old = df_old.withColumnRenamed('_c8','High52')
             df_old = df_old.withColumnRenamed('_c9','Low52')
-            df_old = df_old.withColumnRenamed('_c10','TimeStamp')
+            df_old = df_old.withColumnRenamed('_c10','Font')
+            df_old = df_old.withColumnRenamed('_c11','TimeStamp')
             df_old.show()
         
         
@@ -111,10 +109,11 @@ def main():
             df_new = df_new.withColumnRenamed('_c7','Close')
             df_new = df_new.withColumnRenamed('_c8','High52')
             df_new = df_new.withColumnRenamed('_c9','Low52')
-            df_new = df_new.withColumnRenamed('_c10','TimeStamp')
+            df_new = df_new.withColumnRenamed('_c10','Font')
+            df_new = df_new.withColumnRenamed('_c11','TimeStamp')
             df_new.show()
             df1 = df_old.unionByName(df_new)
-            df1.show()
+            df1.show(df1.count(), False)
         
             # Save file to HDFS
             df1.write.csv(path= "hdfs://node-master:9000/user/hadoop/"+path)
