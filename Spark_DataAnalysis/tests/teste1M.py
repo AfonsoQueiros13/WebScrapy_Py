@@ -12,12 +12,20 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 
 
-spark = SparkSession.builder.appName("Teste100mLinhasWithPandas").getOrCreate()
+spark = SparkSession.builder.appName("Teste1MLinhasParquet").getOrCreate()
 
-df = spark.read.csv(path="csvtest/MCD_yahoo1M.csv")
+df = spark.read.csv(path="tests/MCD_yahoo1M.csv")
+
+df.show(100000)
+df.printSchema()
+
+df.write.parquet('tests/MCD_yahoo1M.parquet')
 
 
-print(df.dtypes)
+
+
+
+
 
 
 #try to count number of occorrences from each value
@@ -25,21 +33,10 @@ print(df.dtypes)
 #dataCollect = df.collect()
 
 
-df = df.withColumnRenamed('_c0','Date')
+#df = df.withColumnRenamed('_c0','Date')    
 df = df.withColumnRenamed('_c1','Open')
-df = df.withColumnRenamed('_c2','High')
-df = df.withColumnRenamed('_c3','Low')
-df = df.withColumnRenamed('_c4','Close')
-df = df.withColumnRenamed('_c5','AdjClose')
-df = df.withColumnRenamed('_c6','Volume')
-
-df = df.withColumn("Open", col("Open").cast('float'))
-df = df.withColumn("High", col("High").cast('float'))
-df = df.withColumn("Low", col("Low").cast('float'))
-df = df.withColumn("Close", col("Close").cast('float'))
-df = df.withColumn("AdjClose", col("AdjClose").cast('float'))
-df = df.withColumn("Volume", col("Volume").cast('float'))
-print(df.dtypes)
+#df = df.withColumnRenamed('_c6','Volume')
+#df = df.withColumnRenamed('_c4','Close')
 #df.show(5)
 
 #date = df.select('Date').collect()
@@ -53,4 +50,3 @@ print(df.dtypes)
 #print(num_open)
 
 #df.agg(countDistinct(col("Open")).alias("count")).show()
-df.write.parquet('csvtest/MCD_yahoo1M.parquet')

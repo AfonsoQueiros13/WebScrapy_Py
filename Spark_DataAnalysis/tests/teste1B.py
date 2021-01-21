@@ -12,9 +12,9 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 
 
-spark = SparkSession.builder.appName("Teste1BLinhas").getOrCreate()
+spark = SparkSession.builder.appName("Teste100MLinhasParquet").getOrCreate()
 
-df = spark.read.csv(path="csvtest/MCD_yahoo1000M.csv")
+df = spark.read.csv(path="tests/MCD_yahoo100M.csv")
 
 df.show(100000)
 df.printSchema()
@@ -25,7 +25,7 @@ df.printSchema()
 #dataCollect = df.collect()
 
 
-#df = df.withColumnRenamed('_c0','Date')
+#df = df.withColumnRenamed('_c0','Date')    
 df = df.withColumnRenamed('_c1','Open')
 #df = df.withColumnRenamed('_c6','Volume')
 #df = df.withColumnRenamed('_c4','Close')
@@ -42,4 +42,4 @@ df = df.withColumnRenamed('_c1','Open')
 #print(num_open)
 
 #df.agg(countDistinct(col("Open")).alias("count")).show()
-df.write.parquet('csvtest/MCD_yahoo1B.parquet')
+df.write.parquet('tests/MCD_yahoo100M.parquet')
